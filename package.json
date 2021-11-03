@@ -12,7 +12,8 @@
     "start": "cross-env NODE_ENV=development webpack serve --mode development",
     "prepare": "husky install",
     "deploy": "npm run build && gh-pages -d dist",
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "serverDev": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
@@ -61,8 +62,11 @@
     "*.{js, jsx, css,md,yml,html}": "prettier --write"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
