@@ -26,6 +26,7 @@ module.exports = {
     "no-console": "off",
     "consistent-return": "off",
     "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
   },
   plugins: ["jest"],
 };

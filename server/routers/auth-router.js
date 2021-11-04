@@ -1,8 +1,9 @@
 const Router = require("express");
-const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+
 const router = new Router();
 
 const secretKey = "mern-secret-key";
@@ -33,7 +34,7 @@ router.post(
       const hashPassword = await bcrypt.hash(password, 8);
       const user = await new User({ email, password: hashPassword });
       await user.save();
-      return res.json({ massage: "User was created " });
+      return res.json({ message: "User was created " });
     } catch (e) {
       console.log(e);
       res.send({ message: "Server error" });
