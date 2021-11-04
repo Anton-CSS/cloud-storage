@@ -3,10 +3,11 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const authMiddleware = require("../middleware/auth.middleware");
+
+const secretKey = require("../secretKey");
 
 const router = new Router();
-
-const secretKey = "mern-secret-key";
 
 router.post(
   "/registration",
@@ -53,6 +54,26 @@ router.post("/login", async (req, res) => {
     if (!isPassValid) {
       return res.status(404).json({ message: "invalid password" });
     }
+    const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: "24h" });
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        diskSpace: user.diskSpace,
+        usedSpace: user.usedSpace,
+        avatar: user.avatar,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({ message: "Server error" });
+  }
+});
+
+router.get("/auth", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
     const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: "24h" });
     return res.json({
       token,
