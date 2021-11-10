@@ -1,0 +1,20 @@
+@import "../../utils/variables";
+
+.disk {
+  margin-top: 20px;
+  &__btns {
+    display: flex;
+    button {
+      color: var(--main-color);
+    }
+  }
+  &__create {
+    display: block;
+    cursor: pointer;
+    padding: 9px;
+    border: 1px solid #566885;
+    box-sizing: border-box;
+    border-radius: 14px;
+    margin-left: 10px;
+  }
+}

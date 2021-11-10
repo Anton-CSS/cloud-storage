@@ -24,13 +24,14 @@ class FileController {
       return res.status(500).json(e);
     }
   }
+
   async receiveFiles(req, res) {
     try {
       const files = await File.find({
         user: req.user.id,
         parent: req.query.parent,
       });
-      return res.json({ files });
+      return res.json(files);
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: "Cannot get files" });

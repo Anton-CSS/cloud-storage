@@ -1,0 +1,33 @@
+.popup {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background: white;
+    padding: 30px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  input {
+    margin: 20px 0;
+  }
+  &__create {
+    align-self: flex-end;
+  }
+}

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const File = require("../models/File");
+
 const pathFiles =
   "C:\\Users\\79267\\Desktop\\Мои тренировки\\сloud storage - MERN\\server\\files";
 
@@ -11,9 +12,8 @@ class FileService {
         if (!fs.existsSync(filePath)) {
           fs.mkdirSync(filePath);
           return resolve({ message: "File was created" });
-        } else {
-          return reject({ message: "File already exist" });
         }
+        return reject({ message: "File already exist" });
       } catch (e) {
         return reject({ message: "File error" });
       }
