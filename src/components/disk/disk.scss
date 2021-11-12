@@ -1,6 +1,7 @@
 @import "../../utils/variables";
 
 .disk {
+  width: 100%;
   margin-top: 20px;
   &__btns {
     display: flex;
@@ -17,4 +18,34 @@
     border-radius: 14px;
     margin-left: 10px;
   }
+  &__upload {
+    margin-left: 10px;
+  }
+  &__file {
+    display: none;
+  }
+  &__label {
+    display: block;
+    border: 2px dashed var(--main-color);
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  &__back {
+    width: 70px;
+    height: 35px;
+    border: 1px solid var(--main-color);
+    border-radius: 37px;
+    background: url("../../assets/img/back.svg") no-repeat center center;
+  }
+}
+.drop-area {
+  width: 80%;
+  margin: 0 auto;
+  margin: 20px;
+  height: calc(100vh - 50px - 40px);
+  border: 3px dashed var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
 }

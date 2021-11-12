@@ -48,14 +48,23 @@ module.exports = {
       {
         test: /\.s[ac]ss$/,
         use: [
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: "postcss-loader",
             options: {
-              publicPath: (resourcePath, context) =>
-                `${path.relative(path.dirname(resourcePath), context)}/`,
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
             },
           },
-          "css-loader",
           "sass-loader",
         ],
       },
