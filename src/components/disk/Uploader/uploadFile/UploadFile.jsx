@@ -5,7 +5,6 @@ import { removeFileUploader } from "../../../../reducers/uploadReducer";
 const UploadFile = ({ file }) => {
   const dispatch = useDispatch();
   const { id, name, progress } = file;
-  console.log(file);
   return (
     <div className="upload-file">
       <div className="upload-file__header">

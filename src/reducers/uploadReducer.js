@@ -50,5 +50,5 @@ export const removeFileUploader = (id) => ({
 });
 export const changeFileUploader = (payload) => ({
   type: CHANGE_UPLOAD_FILE,
-  payload: payload,
+  payload,
 });

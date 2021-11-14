@@ -11,10 +11,11 @@ const Disk = () => {
   const dispatch = useDispatch();
   const { currentDir, dirStack } = useSelector((state) => state.file);
   const [dragEnter, setDragEnter] = useState(false);
+  const [sort, setSort] = useState("type");
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
-  }, [currentDir]);
+    dispatch(getFiles(currentDir, sort));
+  }, [currentDir, sort]);
 
   const backClickHandler = () => {
     const backDirId = dirStack.pop();
@@ -73,6 +74,15 @@ const Disk = () => {
             multiple={true}
           />
         </div>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="disk__select"
+        >
+          <option value="type">По типу</option>
+          <option value="name">По имени</option>
+          <option value="date">По дате</option>
+        </select>
       </div>
       <FileList />
       <Popup />

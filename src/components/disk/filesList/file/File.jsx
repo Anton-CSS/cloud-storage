@@ -5,6 +5,7 @@ import fileLogo from "../../../../assets/img/file.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { PushToStack, SetCurrentDir } from "../../../../reducers/fileReducer";
 import { deleteFile, downloadFile } from "../../../../actions/file";
+import sizeFormat from "../../../../utils/sizeFormat";
 
 const File = ({ file }) => {
   const { _id, name, size, date } = file;
@@ -37,7 +38,7 @@ const File = ({ file }) => {
       />
       <div className="file__name">{name}</div>
       <div className="file__date">{date.slice(0, 10)}</div>
-      <div className="file__size">{size}</div>
+      <div className="file__size">{sizeFormat(size)}</div>
       {file.type === "dir" ? null : (
         <button
           className="file__btn download"
