@@ -7,6 +7,7 @@ import Authorization from "./authorization/Authorization";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../actions/user";
 import Disk from "./disk/Disk";
+import Profile from "./Profile/Profile";
 
 const App = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -30,6 +31,7 @@ const App = () => {
       ) : (
         <Switch>
           <Route path="/" component={Disk} exact />
+          <Route path="/profile" component={Profile} exact />
           <Redirect to={"/"} />
         </Switch>
       )}

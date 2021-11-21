@@ -4,12 +4,17 @@ import getFiles, { uploadFile } from "../../actions/file";
 import "./disk.scss";
 import FileList from "./filesList/FileList";
 import Popup from "./Popup/Popup";
-import { SetCurrentDir, SetPopup } from "../../reducers/fileReducer";
+import {
+  SetCurrentDir,
+  setFileView,
+  SetPopup,
+} from "../../reducers/fileReducer";
 import Uploader from "./Uploader/Uploader";
 
 const Disk = () => {
   const dispatch = useDispatch();
   const { currentDir, dirStack } = useSelector((state) => state.file);
+  const { loader } = useSelector((state) => state.app);
   const [dragEnter, setDragEnter] = useState(false);
   const [sort, setSort] = useState("type");
 
@@ -50,6 +55,19 @@ const Disk = () => {
     files.forEach((file) => dispatch(uploadFile(file, currentDir)));
     setDragEnter(false);
   };
+
+  if (loader) {
+    return (
+      <div className="loader">
+        <div className="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
+
   return !dragEnter ? (
     <div
       className="disk"
@@ -83,6 +101,18 @@ const Disk = () => {
           <option value="name">По имени</option>
           <option value="date">По дате</option>
         </select>
+        <button
+          className="disk__plate"
+          onClick={() => dispatch(setFileView("plate"))}
+        ></button>
+        <button
+          className="disk__slab"
+          onClick={() => dispatch(setFileView("slab"))}
+        ></button>
+        <button
+          className="disk__list"
+          onClick={() => dispatch(setFileView("list"))}
+        ></button>
       </div>
       <FileList />
       <Popup />

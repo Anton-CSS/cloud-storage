@@ -9,7 +9,7 @@ const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
-      return { currentUser: action.payload.user, isAuth: true };
+      return { currentUser: action.payload, isAuth: true };
     case LOGOUT:
       localStorage.removeItem("token");
       return { currentUser: {}, isAuth: false };

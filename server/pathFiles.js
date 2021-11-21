@@ -1,3 +1,9 @@
 const pathFiles =
   "C:\\Users\\79267\\Desktop\\Мои тренировки\\сloud storage - MERN\\server\\files";
-module.exports = pathFiles;
+
+const pathStatic =
+  "C:\\Users\\79267\\Desktop\\Мои тренировки\\сloud storage - MERN\\server\\static";
+module.exports = {
+  pathFiles,
+  pathStatic,
+};

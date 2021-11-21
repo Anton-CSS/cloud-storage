@@ -22,6 +22,7 @@ export const authorization = (email, password) => async (dispatch) => {
       email,
       password,
     });
+    console.log(response.data.user);
     dispatch(setActionUsers(response.data.user));
     localStorage.setItem("token", response.data.token);
   } catch (e) {
@@ -39,5 +40,36 @@ export const auth = () => async (dispatch) => {
   } catch (e) {
     alert(e.response.data.message);
     localStorage.removeItem("token");
+  }
+};
+
+export const uploadAvatar = (file) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await axios.post(
+      `http://localhost:4000/api/files/avatar`,
+      formData,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    dispatch(setActionUsers(response.data));
+  } catch (e) {
+    alert(e);
+  }
+};
+
+export const deleteAvatar = () => async (dispatch) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:4000/api/files/avatar`,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    dispatch(setActionUsers(response.data));
+  } catch (e) {
+    alert(e);
   }
 };

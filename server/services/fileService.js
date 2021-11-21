@@ -1,5 +1,5 @@
 const fs = require("fs");
-const pathFiles = require("../pathFiles");
+const { pathFiles } = require("../pathFiles");
 
 class FileService {
   createDir(file) {

@@ -1,8 +1,9 @@
 const fs = require("fs");
+const Uuid = require("uuid");
 const fileService = require("../fileService");
 const User = require("../../models/user");
 const File = require("../../models/File");
-const pathFiles = require("../../pathFiles");
+const { pathFiles, pathStatic } = require("../../pathFiles");
 
 class FileController {
   async createDir(req, res) {
@@ -115,7 +116,8 @@ class FileController {
   async downloadFile(req, res) {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id });
-      const path = `${pathFiles}\\${req.user.id}\\${file.path}\\${file.name}`;
+      const path = fileService.getPath(file);
+      // const path = `${pathFiles}\\${req.user.id}\\${file.path}\\${file.name}`;
       if (fs.existsSync(path)) {
         return res.download(path, file.name);
       }
@@ -138,6 +140,46 @@ class FileController {
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: "Dir is not empty" });
+    }
+  }
+
+  async searchFile(req, res) {
+    try {
+      const searchName = req.query.search;
+      let files = await File.find({ user: req.user.id });
+      files = files.filter((file) => file.name.includes(searchName));
+      return res.json(files);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Search error" });
+    }
+  }
+
+  async uploadAvatar(req, res) {
+    try {
+      const { file } = req.files;
+      const user = await User.findById(req.user.id);
+      const avatarName = `${Uuid.v4()}.jpg`;
+      file.mv(`${pathStatic}\\${avatarName}`);
+      user.avatar = avatarName;
+      await user.save();
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Upload avatar error" });
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const user = await User.findById(req.user.id);
+      fs.unlinkSync(`${pathStatic}\\${user.avatar}`);
+      user.avatar = null;
+      await user.save();
+      return res.status(200).json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Cannot delete avatar" });
     }
   }
 }

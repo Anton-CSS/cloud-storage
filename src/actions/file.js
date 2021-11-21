@@ -5,10 +5,12 @@ import {
   changeFileUploader,
   showUploader,
 } from "../reducers/uploadReducer";
+import { hideLoader, showLoader } from "../reducers/appReducer";
 
 export default function getFiles(dirId, sort) {
   return async (dispatch) => {
     try {
+      dispatch(showLoader());
       let url;
       if (dirId) {
         url = `http://localhost:4000/api/files?parent=${dirId}`;
@@ -25,6 +27,8 @@ export default function getFiles(dirId, sort) {
       dispatch(SetFiles(response.data));
     } catch (e) {
       alert(e.response.data.message);
+    } finally {
+      dispatch(hideLoader());
     }
   };
 }
@@ -123,5 +127,21 @@ export const deleteFile = (file) => async (dispatch) => {
     alert(response.data.message);
   } catch (e) {
     alert(e?.response?.data?.message);
+  }
+};
+
+export const searchFile = (search) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:4000/api/files/search?search=${search}`,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    dispatch(SetFiles(response.data));
+  } catch (e) {
+    alert(e?.response?.data?.message);
+  } finally {
+    dispatch(hideLoader());
   }
 };
